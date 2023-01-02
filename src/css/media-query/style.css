@@ -1,9 +1,0 @@
-.hide-on-big-device {
-    display: none;
-}
-
-@media screen and (max-width: 480px) {
-    .hide-on-big-device {
-        display: block;
-    }
-}
