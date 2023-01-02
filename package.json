@@ -6,7 +6,7 @@
     "license": "MIT",
     "scripts": {
         "dev": "node live-server.js",
-        "test": "jest src/**/test.js",
+        "test": "jest src/**/test.js src/**/**/test.js",
         "test-basic": "jest src/attributes/test.js",
         "test-anatomy": "jest src/anatomy/test.js"
     },

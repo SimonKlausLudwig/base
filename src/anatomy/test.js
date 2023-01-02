@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { JSDOM } from 'jsdom';
 import { getLoesungOrOther } from '../utils';
 
-const html = getLoesungOrOther('./loesung.html', './index.html');
+const html = getLoesungOrOther('./loesung.html', './index.html', __dirname);
 let dom
 let container
 
