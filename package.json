@@ -1,0 +1,28 @@
+{
+    "name": "simple-html-webiste",
+    "version": "0.1.0",
+    "description": "A simple HTML website served via nodejs",
+    "author": "Simon Ludwig",
+    "license": "MIT",
+    "scripts": {
+        "dev": "node live-server.js",
+        "test": "jest src/**/test.js",
+        "test-basic": "jest src/attributes/test.js",
+        "test-anatomy": "jest src/anatomy/test.js"
+    },
+    "dependencies": {
+        "css": "^3.0.0",
+        "cssparser": "^0.9.4",
+        "glob": "^8.0.3",
+        "live-server": "^1.2.2"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.9.0",
+        "@babel/preset-env": "^7.9.5",
+        "@testing-library/dom": "^7.2.1",
+        "@testing-library/jest-dom": "^5.5.0",
+        "babel-jest": "^25.3.0",
+        "jest": "^25.3.0",
+        "serve": "^11.3.0"
+    }
+}
