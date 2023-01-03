@@ -46,7 +46,26 @@ require('./middleware/passport');
 
 // ROUTES
 app.get('/', (req, res) => {
-    res.send('Welcome to my Movie API!')
+    res.send(`<html>
+        Benutzer anlegen:
+
+        curl -XPOST -H "Content-type: application/json" -d '{
+            "Name": "Simon",
+            "Password": "Simon123",
+            "Email": "simon@simon-ludwig.de",
+            "Birthday": "01-12-1995"
+          }' 'https://8080-simonklausludwig-base-kf7z0cnonlc.ws-eu80.gitpod.io/users'
+
+
+          curl -XPOST -H 'Content-Type: application/json' -d '{
+            "Name": "Simon",
+            "Password": "Simon123"
+          }' 'https://8080-simonklausludwig-base-kf7z0cnonlc.ws-eu80.gitpod.io/login'
+
+          curl -XGET -H 'Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2I0Njg5ZGYzNTcyMjNjMjAzN2Q5ZmYiLCJOYW1lIjoiU2ltb24iLCJQYXNzd29yZCI6IiQyYiQxMCROdm5aeXlJaXhhU3h6STZ3aXdEbE11d2VjUTNZd1ZPR3pYNDlVUm1QdWd2NmpIZGlKNWNQZSIsIkVtYWlsIjoic2ltb25Ac2ltb24tbHVkd2lnLmRlIiwiQmlydGhkYXkiOiIxOTk1LTAxLTEyVDAwOjAwOjAwLjAwMFoiLCJGYXZvcml0ZU1vdmllcyI6W10sIl9fdiI6MCwiaWF0IjoxNjcyNzY4MTcyLCJleHAiOjE2NzMzNzI5NzIsInN1YiI6IlNpbW9uIn0.i8PBr_ch-ojOH1gl3qP2YXboIEPEKkTSjpx8_Q1hVQc' 'https://8080-simonklausludwig-base-kf7z0cnonlc.ws-eu80.gitpod.io/movies'
+
+
+    </html>`)
 });
 
 app.use(loginRouter);
