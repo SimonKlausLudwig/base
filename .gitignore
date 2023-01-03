@@ -1,1 +1,3 @@
 node_modules
+src/react/calculator/public
+src/react/calculator/node_modules

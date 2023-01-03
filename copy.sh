@@ -7,7 +7,7 @@ git remote add origin git@github.com:SimonKlausLudwig/base.git
 git branch -M main
 git pull origin main
 
-cp -r ../html/* ./
+rsync -rv --exclude=.git ../html/. ./
 find . -type f -iname '*loesung*' -delete
 git add -A
 git commit -m "push"

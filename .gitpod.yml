@@ -4,6 +4,8 @@
 
 tasks:
   - init: yarn install
-    command: yarn run dev
+    command: yarn run dev 
+
+  - init: mkdir -p /workspace/data && mongod --dbpath /workspace/data
 
 
