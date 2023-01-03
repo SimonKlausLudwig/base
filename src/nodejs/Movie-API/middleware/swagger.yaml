@@ -1,0 +1,430 @@
+openapi: 3.0.0
+info:
+  description: >-
+    This API allows a user to receive information on climate movies and
+    directors so that he can learn more about movies he has watched or is
+    interested in. Also he can create a profile, so he can save data about his
+    favorite movies. The user can use the following endpoints to navigate through the application:
+  title: Welcome to my Express API for Movies and Users!
+  version: 1.0.0
+paths:
+  /login:
+    post:
+      summary: Login for user with HTTP authentication
+      tags:
+        - login
+      responses:
+        '400':
+          description: bad request, credentials do not match.
+  /users:
+    post:
+      summary: Create and add a new user.
+      tags:
+        - users
+      responses:
+        '201':
+          description: New user created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The new user's name.
+                    example: Kim
+                  password:
+                    type: string
+                    description: The new user's password.
+                    example: rain345
+                  email:
+                    type: string
+                    description: The new user's email address.
+                    example: kim@gmail.com
+                  birthday:
+                    type: string
+                    description: The new user's birthday.
+                    example: 1984-08-05
+                  favoriteMovies:
+                    type: array
+                    description: List of the user's favorite movies.
+                    items:
+                      type: string
+                      description: Id of a favorite movie
+                      example: 624e9ae5122deed3780f1f66
+                  _id:
+                    type: integer
+                    description: The user ID.
+                    example: 623rrd1cbb04432b23ef7543
+        '400':
+          description: bad request, user name is required.
+        '409':
+          description: conflict, user name already exists.
+        '422':
+          description: unprocessable entity.
+        '500':
+          description: internal server error.
+  /users/{Name}/movies/{Title}:
+    parameters:
+      - name: Name
+        in: path
+        description: name of user to fetch
+        required: true
+        schema:
+          type: string
+      - name: Title
+        in: path
+        description: title of movie to fetch
+        required: true
+        schema:
+          type: string
+    post:
+      summary: Add favorite movie from user by movie title.
+      tags:
+        - users
+
+      responses:
+        '201':
+          description: user profile updated, favorite movie added
+          content:
+            application/json:
+              schema:
+                type: string
+                example: snowpiercer has been added to array of user 1.
+        '400':
+          description: bad request, movie already included.
+        '404':
+          description: user or movie not found.
+        '500':
+          description: internal server error.
+    delete:
+      summary: Remove favorite movie from user by movie title.
+      tags:
+        - users
+      responses:
+        '200':
+          description: favorite movie was deleted from selected user.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Snowpiercer was deleted from user Tom.
+        '304':
+          description: Not modified, movie does not exist in list of favorite movies.
+        '404':
+          description: Movie not found.
+        '500':
+          description: bad request, there is no such user.
+  /movies:
+    get:
+      summary: Read and display all movies.
+      tags:
+        - movies
+      description: Retrieve a list of all movies from local variable
+      responses:
+        '200':
+          description: lists all movies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      description: Generated id of the movie
+                      example: 624e9ae5122deed3780f1f66
+                    Title:
+                      type: string
+                      description: The title of the movie.
+                      example: WALL-E
+                    Description:
+                      type: string
+                      description: The plot of the movie.
+                      example: WALL-E follows a solitary robot on a future, uninhabitable, deserted Earth in 2805, left...
+                    Genre:
+                      type: object
+                      properties:
+                        Name:
+                          type: string
+                          description: The genre of the movie.
+                          example: Science-fiction.
+                        Description:
+                          type: string
+                          description: The definition of the genre.
+                          example: Science fiction is a film genre that uses speculative, fictional science-based depictions of phenomena...
+                    Director:
+                      type: object
+                      properties:
+                        Name:
+                          type: string
+                          description: The name of the director.
+                          example: Andrew Stanton
+                        Bio:
+                          type: string
+                          description: Biographic details about the director.
+                          example: Andrew Stanton was born in Rockport....
+                        Birth:
+                          type: string
+                          description: The year of birth of the director.
+                          example: 1965
+                        Death:
+                          type: string
+                          description: The year of death of the director.
+                          example: 2015
+                    ImageURL:
+                      type: string
+                      description: url of an image fitting the plot of the movie.
+                      example: https://i.picsum.photos/id/1002/200/300.jpg?hmac=QAnT71VGihaxEf_iyet9i7yb3JvYTzeojsx-djd3Aos
+                    Featured:
+                      type: boolean
+                      example: true
+  /movies/{title}:
+    parameters:
+      - name: title
+        in: path
+        description: title of movie to fetch
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Read and display movie by title.
+      tags:
+        - movies
+      description: Retrieve a single movie from local variable title.
+      responses:
+        '200':
+          description: ok. lists information about selected movie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: Generated id of the movie
+                    example: 624e9ae5122deed3780f1f66
+                  Title:
+                    type: string
+                    description: The title of the movie.
+                    example: WALL-E
+                  Description:
+                    type: string
+                    description: The plot of the movie.
+                    example: WALL-E follows a solitary robot on a future, uninhabitable, deserted Earth in 2805, left...
+                  Genre:
+                    type: object
+                    properties:
+                      Name:
+                        type: string
+                        description: The genre of the movie.
+                        example: Science-fiction.
+                      Description:
+                        type: string
+                        description: The definition of the genre.
+                        example: Science fiction is a film genre that uses speculative, fictional science-based depictions of phenomena...
+                  Director:
+                    type: object
+                    properties:
+                      Name:
+                        type: string
+                        description: The name of the director.
+                        example: Andrew Stanton
+                      Bio:
+                        type: string
+                        description: Biographic details about the director.
+                        example: Andrew Stanton was born in Rockport....
+                      Birth:
+                        type: string
+                        description: The year of birth of the director.
+                        example: 1965
+                      Death:
+                        type: string
+                        description: The year of death of the director.
+                        example: 2015
+                  ImageURL:
+                    type: string
+                    description: url of an image fitting the plot of the movie.
+                    example: https://i.picsum.photos/id/1002/200/300.jpg?hmac=QAnT71VGihaxEf_iyet9i7yb3JvYTzeojsx-djd3Aos
+                  Featured:
+                    type: boolean
+                    example: true
+        '500':
+          description: internal server error.
+  /movies/genre/{Name}:
+    parameters:
+      - name: Name
+        in: path
+        description: genre name of movie to fetch
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Read and display data about genre of movie by genre's Name.
+      tags:
+        - movies
+      description: Retrieve information about the genre of a movie from local variable Name.
+      responses:
+        '200':
+          description: lists information about genre
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Name:
+                    type: string
+                    description: The genre of the movie.
+                    example: Science-fiction
+                  Description:
+                    type: string
+                    description: The definition of the genre.
+                    example: Science fiction is a film genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream...
+        '500':
+          description: internal server error.
+  /movies/director/{Name}:
+    parameters:
+      - name: Name
+        in: path
+        description: director name of movie to fetch
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Read and display data about director by director's Name.
+      tags:
+        - movies
+      description: Retrieve a single director by local variable Name
+      responses:
+        '200':
+          description: information about director of movie.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Name:
+                    type: string
+                    description: The name of the director.
+                    example: Andrew Stanton
+                  Bio:
+                    type: string
+                    description: Biographic details about the director.
+                    example: Andrew Stanton was born in Rockport....
+                  Birth:
+                    type: string
+                    description: The year of birth of the director.
+                    example: 1965
+                  Death:
+                    type: string
+                    description: The year of death of the director.
+                    example: 2015
+        '500':
+          description: internal server error.
+  /users/{Name}:
+    parameters:
+      - name: Name
+        in: path
+        description: Name of user to fetch
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - users
+      responses:
+        '200':
+          description: user was found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Name:
+                    type: string
+                    description: The user's name.
+                    example: Mona2
+                  Password:
+                    type: string
+                    description: Encrypted password of user.
+                    example: hufflepuff345
+                  Birthday:
+                    type: string
+                    description: birthday of user.
+                    example: 1981-02-04
+                  Email:
+                    type: string
+                    description: email of the user.
+                    example: example@gmail.com
+                  FavoriteMovies:
+                    type: array
+                    description: List of the user's favorite movies.
+                    items:
+                      type: string
+                      description: ID of a favorite movie
+                      example: 624e9ae5122deed3780f1f66
+        '404':
+          description: User not found.
+    put:
+      summary: Update user information by user Name.
+      tags:
+        - users
+      responses:
+        '200':
+          description: username was updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: The user ID.
+                    example: 624fedd4a07209d40ae5b0e9
+                  name:
+                    type: string
+                    description: The user's name.
+                    example: Mona2
+                  password:
+                    type: string
+                    description: password of user.
+                    example: hufflepuff345
+                  birthday:
+                    type: string
+                    description: birthday of user.
+                    example: 1981-02-04
+                  favoriteMovies:
+                    type: array
+                    description: List of the user's favorite movies.
+                    items:
+                      type: string
+                      description: ID of a favorite movie
+                      example: 624e9ae5122deed3780f1f66
+        '422':
+          description: unprocessable entity.
+        '500':
+          description: internal server error.
+    delete:
+      summary: Delete a single user by user name.
+      tags:
+        - users
+      description: Delete a single user. Can be used to depopulate a user profile when prototyping or testing an API.
+      responses:
+        '200':
+          description: ok.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Tom was deleted.
+        '400':
+          description: bad request, user was not found.
+components: {}
+tags:
+  - name: login
+    description: all endpoints regarding site login and authentication
+  - name: users
+    description: all endpoints regarding users of movie
+  - name: movies
+    description: all endpoints regarding movies
