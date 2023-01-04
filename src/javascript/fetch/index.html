@@ -1,0 +1,48 @@
+<html>
+
+
+
+<body>
+    <button id="create">Anlegen</button>
+</body>
+
+<script>
+
+    fetch("/api/employees/").then(data => {
+        data.json().then(json => {
+            json.map(employee => {
+                addElement(employee);
+            })
+        })
+    })
+
+    function addElement(employee) {
+        // create a new div element
+        const newDiv = document.createElement("div");
+
+        // and give it some content
+        const newContent = document.createTextNode(employee.name);
+
+        // add the text node to the newly created div
+        newDiv.appendChild(newContent);
+
+        // add the newly created element and its content into the DOM
+        const currentDiv = document.getElementById("div1");
+        document.body.insertBefore(newDiv, currentDiv);
+    }
+
+    document.getElementById("create").addEventListener('click', () => {
+        fetch("/api/employee/?name=" + prompt("Name eingeben"),
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+            })
+            .then(function (res) { window.location.reload() })
+            .catch(function (res) { console.log(res) })
+    })
+</script>
+
+</html>

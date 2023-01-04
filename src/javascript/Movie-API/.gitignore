@@ -1,0 +1,9 @@
+.idea
+node_modules
+not_public
+/mongoDB_database/
+_old/scratch database.js
+.DS_Store
+middleware/log.txt
+.idea
+_old

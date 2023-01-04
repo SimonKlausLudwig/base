@@ -1,0 +1,45 @@
+{
+  "name": "movie_api",
+  "version": "1.0.0",
+  "description": "This API allows a user to receive information on movies, directors, and genres so that he can learn more about movies he has watched or is interested in. &lt;br> Also he can create a profile, so he can save data about his favorite movies.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "debug": "DEBUG=express:* nodemon --experimental-json-modules index.js"
+  },
+  
+    
+    
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LisaPMunich/Movie-API.git"
+  },
+  "keywords": [],
+  "author": "LisaPape",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LisaPMunich/Movie-API/issues"
+  },
+  "homepage": "https://github.com/LisaPMunich/Movie-API#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "express-validator": "^6.14.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.10",
+    "morgan": "^1.10.0",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "uuid": "^8.3.2",
+    "swagger-jsdoc": "^5.0.1",
+    "swagger-ui-express": "^4.3.0",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
