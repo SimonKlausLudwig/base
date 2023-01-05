@@ -1,8 +1,0 @@
-{
-    "author": "Simon Ludwig",
-    "license": "MIT",
-    "scripts": {
-        "start": "python -m http.server 8000",
-        "test": "yarn --cwd ./../../ jest \"$INIT_CWD.*test\\.js\""
-    }
-}
