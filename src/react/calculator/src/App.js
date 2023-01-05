@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-
+import { v4 as uuid } from 'uuid';
 import { appendErrors, useForm } from "react-hook-form";
 import Select from 'react-select'
 import useFetch from "react-fetch-hook";
@@ -19,19 +19,20 @@ const contributor = "Luca"
         </div >
 */
 function App() {
-  const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/mates");
+  const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills");
   const { register, handleSubmit, formState: { errors } } = useForm();
 
 
   if (isLoading) {
+    console.log("...loading")
     return <div>Is loading!</div>
   }
 
-  const mates = data;
+  //const bills = data;
 
 
   const onSubmit = data =>
-    fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills/?contributor=" + contributor + "&amount=" + data.amount + "&sharedWith=" + data.sharedWith, + "&comment=" + "test",
+    fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills",///?contributor=" + contributor + "&amount=" + data.amount + "&sharedWith=" + data.sharedWith, + "&comment=" + "test",
       {
         headers: {
           'Accept': 'application/json',

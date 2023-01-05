@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+//import { v4 as uuid } from 'uuid';
 
 const express = require('express');
 const app = express();
@@ -20,7 +20,7 @@ let employees = [
 
 
 let mates = [{ "firstname": "Luca", "lastname": "Mohr", "personID": 1, "groupID": 1 }, { "firstname": "Niklas", "lastname": "Scholz", "personID": 2, "groupID": 1 }]
-let bills = [{ "contributor": "Luca", "amount": -13.30, "sharedWith": ["Luca", "Niklas"] }]
+let bills = [{ "billID": 1, "contributor": "Luca", "amount": -13.30, "sharedWith": "Niklas", "comment": "test" }]
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
@@ -45,20 +45,16 @@ app.delete("/api/mates/:mateID", (req, res) => {
 })
 
 // api bills
-app.put("/api/bills", (req, res) => {
-    let uuid = uuid()
-    bills.push({ billID: uuid, contributor: req.contributor, amount: req.amount, sharedWith: req.sharedWith, comment: req.comment });
-    res.send(200);
-})
-app.get('/api/bills', (req, res) => res.json(bills));
-app.delete(app.delete("/api/mates/:billID", (req, res) => {
-    mates.filter(bill => bill.billID === req.params.billID)
-    res.send(200);
-}))
-app.post("/api/bills")
-app.put("/api/bills", (req, res) => {
-    let uuid = uuid()
-    bills.push({ billID: uuid, contributor: "Luca", amount: -20, sharedWith: "Niklas", comment: "Test" });
-    res.send(200);
-})
+app.put('/api/bills', (req, res) => { 
+    bills.push({billID:})
+ });
+;
+app.post('/api/bills', (req, res) => {
+    res.json(bills)
+});
+;
+app.get('/api/bills', (req, res) => {
+    res.json(bills)
+});
+;
 module.exports = app;
