@@ -22,4 +22,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
 });
 
+// bills api
+app.get("/api/bills")
+
 module.exports = app;

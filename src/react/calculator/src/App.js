@@ -6,9 +6,18 @@ import Select from 'react-select'
 import useFetch from "react-fetch-hook";
 
 const contributor = "Luca"
-
-
-
+/*
+  < div class="row" >
+  {
+    mates.map(mate => <label>
+      <p>{mate.firstname}</p>
+      <p>{mate.lastname}</p>
+      <p>{mate.personID}</p>
+      <p>{mate.groupID}</p>
+    </label>)
+  }
+        </div >
+*/
 function App() {
   const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/mates");
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -22,7 +31,7 @@ function App() {
 
 
   const onSubmit = data =>
-    fetch("/api/bills/?contributor=" + contributor + "&amount=" + data.amount + "&sharedWith=" + data.sharedWith + "&comment=" + data.comment,
+    fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills/?contributor=" + contributor + "&amount=" + data.amount + "&sharedWith=" + data.sharedWith, + "&comment=" + "test",
       {
         headers: {
           'Accept': 'application/json',
@@ -86,14 +95,7 @@ function App() {
         <div class="row">
           <p class="text-start">Placeholder</p>
         </div>
-        <div class="row">
-          {mates.map(mate => <label>
-            <p>{mate.firstname}</p>
-            <p>{mate.lastname}</p>
-            <p>{mate.personID}</p>
-            <p>{mate.groupID}</p>
-          </label>)}
-        </div>
+
 
 
       </form>
