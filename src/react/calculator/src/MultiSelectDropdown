@@ -1,0 +1,59 @@
+import React, { useState } from "react";
+
+function MultiSelectDropdown(props) {
+  // Create a state variable to store the selected options
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  // Create a function to handle the change event of the checkboxes
+  function handleChange(event) {
+    const { value } = event.target;
+    if (event.target.checked) {
+      // If the checkbox is checked, add the option to the list of selected options
+      setSelectedOptions([...selectedOptions, value]);
+    } else {
+      // If the checkbox is unchecked, remove the option from the list of selected options
+      setSelectedOptions(selectedOptions.filter(option => option !== value));
+    }
+  }
+
+  // Create a function to handle the "Select All" and "Clear All" buttons
+  function handleSelectAll(event) {
+    if (event.target.id === "select-all") {
+      // If the "Select All" button is clicked, select all the options
+      setSelectedOptions(props.options);
+    } else if (event.target.id === "clear-all") {
+      // If the "Clear All" button is clicked, clear the selected options
+      setSelectedOptions([]);
+    }
+  }
+
+  return (
+    <div className="multiselect-dropdown">
+      <button id="dropdown-button">Select</button>
+      <div id="dropdown-options">
+        <div className="multiselect-dropdown-all-selector">
+          <button id="select-all" onClick={handleSelectAll}>
+            Select All
+          </button>
+          <button id="clear-all" onClick={handleSelectAll}>
+            Clear All
+          </button>
+        </div>
+        {props.options.map(option => (
+          <div key={option}>
+            <input
+              type="checkbox"
+              id={option}
+              value={option}
+              checked={selectedOptions.includes(option)}
+              onChange={handleChange}
+            />
+            <label htmlFor={option}>{option}</label>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default MultiSelectDropdown;

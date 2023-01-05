@@ -45,9 +45,10 @@ app.delete("/api/mates/:mateID", (req, res) => {
 })
 
 // api bills
-app.put('/api/bills', (req, res) => { 
-    bills.push({billID:})
- });
+app.put('/api/bills', (req, res) => {
+    bills.push({ billID: req.query.billID, contributor: req.query.contributor, amount: req.query.amount, sharedWith: req.query.sharedWith, comment: req.query.comment })
+    res.send(200)
+});
 ;
 app.post('/api/bills', (req, res) => {
     res.json(bills)
