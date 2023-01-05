@@ -25,7 +25,8 @@
     "joi": "^17.4.1",
     "monk": "^7.3.3",
     "morgan": "^1.10.0",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "eslint": "^7.31.0",
