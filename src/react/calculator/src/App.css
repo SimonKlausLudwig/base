@@ -8,3 +8,37 @@
   width: 300px;
 
 }
+
+#select {
+  width: 300px;
+}
+
+
+.checkbox {
+  /* style the dropdown */
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.checkbox div {
+  /* style the options in the dropdown */
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.checkbox div:hover {
+  /* style the options when they are hovered over */
+  background-color: #eee;
+}
+
+.checkbox input[type="checkbox"] {
+  /* style the checkboxes */
+  margin-right: 10px;
+}
+
+.checkbox label {
+  /* style the labels */
+}

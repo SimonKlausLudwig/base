@@ -14,7 +14,8 @@
         "css": "^3.0.0",
         "cssparser": "^0.9.4",
         "glob": "^8.0.3",
-        "live-server": "^1.2.2"
+        "live-server": "^1.2.2",
+        "react-router-dom": "^6.6.1"
     },
     "devDependencies": {
         "@babel/core": "^7.9.0",
