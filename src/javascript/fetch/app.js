@@ -64,4 +64,16 @@ app.delete("/api/bills/:billID", (req, res) => {
     bills = bills.filter(bill => bill.billID != req.params.billID)
     res.send(200);
 })
+
+
+
+// login api
+
+let login = [{ "username": "luca@gmx.de", "password": "luca" }, { "username": "niklas@gmx.de", "password": "luca" }]
+app.post('/api/login', (req, res) => {
+    res.json(login)
+});
+app.get('/api/login', (req, res) => {
+    res.json(login)
+});
 module.exports = app;
