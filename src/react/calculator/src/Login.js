@@ -11,7 +11,7 @@ function Login() {
     let { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/login");
 
     const onSubmit = formData => {
-        
+
         console.log(formData)
         data.forEach(element => {
             if ((formData.username === element.username) && (formData.password === element.password)) {
@@ -25,7 +25,7 @@ function Login() {
     return (
 
         <form onSubmit={handleSubmit(onSubmit)}>
-            
+
             <div className="form-group">
                 <label htmlFor="email">Email address</label>
                 <input {...register("username")} type="email" className="form-control" id="email" aria-describedby="emailHelp" />

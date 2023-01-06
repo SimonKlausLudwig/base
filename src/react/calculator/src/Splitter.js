@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Splitter.css';
-import MultiSelectDropdown from "./MultiSelectDropdown";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+//import MultiSelectDropdown from "./MultiSelectDropdown";
+//npmimport { BrowserRouter, Route, Link } from "react-router-dom";
 import { v4 as uuid } from 'uuid';
 import { appendErrors, useForm } from "react-hook-form";
 //import Select from 'react-select'
@@ -10,6 +10,7 @@ import useFetch from "react-fetch-hook";
 
 
 const contributor = "Luca"
+
 
 function Splitter() {
   const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills");
