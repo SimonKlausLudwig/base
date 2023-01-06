@@ -20,7 +20,7 @@ let employees = [
 
 
 let mates = [{ "firstname": "Luca", "lastname": "Mohr", "personID": 1, "groupID": 1 }, { "firstname": "Niklas", "lastname": "Scholz", "personID": 2, "groupID": 1 }]
-let bills = [{ "billID": 1, "contributor": "Luca", "amount": -13.30, "sharedWith": "Niklas", "comment": "test" }]
+let bills = [{ "billID": 1, "contributor": "Luca", "amount": "13.30", "sharedWith": "Niklas", "comment": "test" }]
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
@@ -58,4 +58,9 @@ app.get('/api/bills', (req, res) => {
     res.json(bills)
 });
 ;
+app.delete("/api/bills/:billID", (req, res) => {
+
+    bills.filter(bill => bill.billID === req.params.billID)
+    res.send(200);
+})
 module.exports = app;
