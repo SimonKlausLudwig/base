@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import './App1.css';
 import MultiSelectDropdown from "./MultiSelectDropdown";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import { v4 as uuid } from 'uuid';
@@ -22,7 +22,7 @@ const contributor = "Luca"
   }
         </div >
 */
-function App() {
+function App1() {
   const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills");
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -144,4 +144,4 @@ function App() {
 
 }
 
-export default App;
+export default App1;

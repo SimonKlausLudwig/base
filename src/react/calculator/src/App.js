@@ -1,38 +1,56 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useForm } from "react-hook-form";
+import './App4.css';
 import useFetch from "react-fetch-hook";
+import { Link } from 'react-router-dom';
+function divider(sharedWith) {
+  if (typeof (sharedWith == "String")) {
+    return 2
+  }
+  else return sharedWith.length + 1
+}
+
+function deleteEntry(shoppingListID) {
+  fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList/" + shoppingListID, {
+
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    method: "DELETE"
+  })
+    .then(function (res) { window.location.reload() })
+    .catch(function (res) { console.log(res) })
+}
+
+// ...
+
 
 
 
 function App() {
-    let { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/login");
-
-    const onSubmit = formData => {
-        console.log(data)
-        console.log(formData)
-        data.forEach(element => {
-            if ((formData.username === element.username) && (formData.password === element.password)) {
-                console.log("perfekt")
-            }
-        });
-    }
-    const { register, handleSubmit, formState: { errors } } = useForm();
+  const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList");
+  if (isLoading === false) {
+    console.log(Object.keys(data))
+    console.log()
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-group">
-                <label htmlFor="email">Email address</label>
-                <input {...register("username")} type="email" className="form-control" id="email" aria-describedby="emailHelp" />
-                <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-            <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input {...register("password")} type="password" className="form-control" id="password" />
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
+      <div className="App">
+        <table>
+          <tr>
+            <th>Gegenstand</th>
+            <th></th>
+          </tr>
+          {data.map(item => (
+            <tr>
+              <td>{item.item}</td>
+
+              <td><button onClick={() => deleteEntry(item.shoppingListID)}>Löschen!</button></td>
+            </tr>
+          ))}
+        </table>
+      </div>
+
     );
+  }
 }
 
 export default App;

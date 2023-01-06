@@ -1,8 +1,9 @@
-//import { v4 as uuid } from 'uuid';
+
 
 const express = require('express');
 const app = express();
 const path = require('path');
+const uuid4 = require('uuid4');
 
 
 app.use(function (req, res, next) {
@@ -76,4 +77,18 @@ app.post('/api/login', (req, res) => {
 app.get('/api/login', (req, res) => {
     res.json(login)
 });
+
+// shooping list api
+let shoppingList = [{ "contributor": "Luca", "item": "Käse", "shoppingListID": uuid4() }, { "contributor": "Niklas", "item": "Brot", "shoppingListID": uuid4() }]
+app.post('/api/shoppingList', (req, res) => {
+    res.json(shoppingList)
+});
+app.get('/api/shoppingList', (req, res) => {
+    res.json(shoppingList)
+});
+app.delete("/api/shoppingList/:shoppingListID", (req, res) => {
+
+    shoppingList = shoppingList.filter(shoppingList => shoppingList.shoppingListID != req.params.shoppingListID)
+    res.send(200);
+})
 module.exports = app;

@@ -1,4 +1,4 @@
-import './App.css';
+import './App2.css';
 import useFetch from "react-fetch-hook";
 import { Link } from 'react-router-dom';
 function divider(sharedWith) {
@@ -26,7 +26,7 @@ function deleteEntry(billID) {
 
 
 
-function App() {
+function App2() {
   const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills");
   if (isLoading === false) {
     console.log(Object.keys(data))
@@ -60,4 +60,4 @@ function App() {
   }
 }
 
-export default App;
+export default App2;
