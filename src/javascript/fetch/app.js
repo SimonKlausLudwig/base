@@ -20,7 +20,7 @@ let employees = [
 
 
 let mates = [{ "firstname": "Luca", "lastname": "Mohr", "personID": 1, "groupID": 1 }, { "firstname": "Niklas", "lastname": "Scholz", "personID": 2, "groupID": 1 }]
-let bills = [{ "billID": 1, "contributor": "Luca", "amount": -13.30, "sharedWith": "Niklas", "comment": "test" }]
+let bills = [{ "billID": "1", "contributor": "Luca", "amount": "13.30", "sharedWith": "Niklas", "comment": "test", "date": "2022-01-06" }, { "billID": "2", "contributor": "Niklas", "amount": "13.30", "sharedWith": "Luca", "comment": "Test 2", "date": "2022-01-06" }]
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
@@ -46,7 +46,7 @@ app.delete("/api/mates/:mateID", (req, res) => {
 
 // api bills
 app.put('/api/bills', (req, res) => {
-    bills.push({ billID: req.query.billID, contributor: req.query.contributor, amount: req.query.amount, sharedWith: req.query.sharedWith, comment: req.query.comment })
+    bills.push({ billID: req.query.billID, contributor: req.query.contributor, amount: req.query.amount, sharedWith: req.query.sharedWith, comment: req.query.comment, date: req.query.date })
     res.send(200)
 });
 ;
@@ -54,8 +54,26 @@ app.post('/api/bills', (req, res) => {
     res.json(bills)
 });
 ;
-app.get('/api/bills', (req, res) => {
+app.get('/api/bills/', (req, res) => {
+    //bills = bills.filter(bill => bill.billID != req.params.billID)
     res.json(bills)
 });
 ;
+app.delete("/api/bills/:billID", (req, res) => {
+
+    bills = bills.filter(bill => bill.billID != req.params.billID)
+    res.send(200);
+})
+
+
+
+// login api
+
+let login = [{ "username": "luca@gmx.de", "password": "luca" }, { "username": "niklas@gmx.de", "password": "luca" }]
+app.post('/api/login', (req, res) => {
+    res.json(login)
+});
+app.get('/api/login', (req, res) => {
+    res.json(login)
+});
 module.exports = app;
