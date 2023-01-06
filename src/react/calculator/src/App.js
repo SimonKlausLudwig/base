@@ -61,7 +61,7 @@ const Layout = () => {
         <>
             <h1>Splitmate</h1>
 
-            <Navbar bg="light" variant="light" className="justify-content-center">
+            <Navbar bg="light" variant="light" className="justify-content-center" hidden={false}>
 
 
                 <NavLink to="/shoppinglist" style={style}>
@@ -345,6 +345,7 @@ const Login = () => {
             if ((formData.username === element.username) && (formData.password === element.password)) {
                 console.log("perfekt")
                 navigate("overview")
+
 
 
             }
