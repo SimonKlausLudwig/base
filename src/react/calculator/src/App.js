@@ -1,63 +1,147 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import MultiSelectDropdown from "./MultiSelectDropdown";
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import { v4 as uuid } from 'uuid';
+import { appendErrors, useForm } from "react-hook-form";
+//import Select from 'react-select'
 import useFetch from "react-fetch-hook";
-import { Link } from 'react-router-dom';
-function divider(sharedWith) {
-  if (typeof (sharedWith == "String")) {
-    return 2
+
+
+
+const contributor = "Luca"
+/*
+  < div class="row" >
+  {
+    mates.map(mate => <label>
+      <p>{mate.firstname}</p>
+      <p>{mate.lastname}</p>
+      <p>{mate.personID}</p>
+      <p>{mate.groupID}</p>
+    </label>)
   }
-  else return sharedWith.length + 1
-}
-
-function deleteEntry(billID) {
-  fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills/" + billID, {
-
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    method: "DELETE"
-  })
-    .then(function (res) { window.location.reload() })
-    .catch(function (res) { console.log(res) })
-}
-
-// ...
-
-
-
-
+        </div >
+*/
 function App() {
   const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills");
-  if (isLoading === false) {
-    console.log(Object.keys(data))
-    console.log()
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
-    return (
-      <div className="App">
-        <table>
-          <tr>
-            <th>Gläubiger</th>
-            <th>Rechnung</th>
-            <th>Schuldner</th>
-            <th>Datum</th>
-            <th>Betrag</th>
-            <th></th>
-          </tr>
-          {data.map(item => (
-            <tr>
-              <td>{item.contributor}</td>
-              <td>{item.billID}</td>
-              <td>{item.sharedWith}</td>
-              <td>{item.datum}</td>
-              <td>{item.amount}</td>
-              <td><button onClick={() => deleteEntry(item.billID)}>Löschen!</button></td>
-            </tr>
-          ))}
-        </table>
-      </div>
 
-    );
+  if (isLoading) {
+    console.log("...loading")
+    return <div>Is loading!</div>
   }
+
+  const bills = data;
+
+
+  const onSubmit = data => {
+    let date = new Date();
+    date = date.toISOString()
+    date = date.substring(0, 10)
+
+
+    let datasharedWith = data.sharedWith
+    let amountPeople = datasharedWith.length + 1
+    datasharedWith.forEach(element => {
+
+
+      fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills?contributor=" + contributor + "&amount=" + parseInt((data.amount / amountPeople)) + "&sharedWith=" + element + "&comment=" + data.comment + "&billID=" + uuid() + "&date=" + date, {
+
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "PUT"
+      })
+        .then(function (res) { window.location.reload() })
+        .catch(function (res) { console.log(res) })
+    });
+  }
+
+  const options = [
+    { value: 'luca', label: 'Luca' },
+    { value: 'niklas', label: 'Niklas' },
+    { value: 'simon', label: 'Simon' }
+  ]
+  const MyComponent = () => (
+    <Select options={options} isMulti />
+  )
+
+
+
+
+
+
+
+
+
+  return (
+
+    <main class="form-signin w-100 m-auto">
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div class="row">
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text">Betrag €</span>
+              <input {...register("amount")} type="text" class="form-control" aria-label="Amount (to the nearest dollar)"></input>
+
+            </div>
+
+          </div>
+          <div class="col checkbox">
+            <div>
+              <input {...register("sharedWith")} type="checkbox" id="option1" value="niklas" />
+              <label for="option1">Niklas</label>
+            </div>
+            <div>
+              <input {...register("sharedWith")} type="checkbox" id="option2" value="luca" />
+              <label for="option2">Luca</label>
+            </div>
+            <div>
+              <input {...register("sharedWith")} type="checkbox" id="option3" value="tim" />
+              <label for="option3">Tim</label>
+            </div>
+            <div>
+              <input {...register("sharedWith")} type="checkbox" id="option4" value="tom" />
+              <label for="option4">Tom</label>
+            </div>
+
+
+
+
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="input-group " id="Kommentar">
+              <span class="input-group-text">Kommentar</span>
+              <textarea {...register("comment")} class="form-control" aria-label="Kommentar"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div>
+              <button id="create" class="w-100 btn btn-lg btn-primary" type="submit">
+                splitten
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <p class="text-start">Placeholder</p>
+        </div>
+
+
+      </form>
+    </main >
+
+  );
+
+
 }
 
 export default App;
