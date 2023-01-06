@@ -1,4 +1,4 @@
-import './App4.css';
+import './Overview.css';
 import useFetch from "react-fetch-hook";
 import { Link } from 'react-router-dom';
 function divider(sharedWith) {
@@ -8,8 +8,8 @@ function divider(sharedWith) {
   else return sharedWith.length + 1
 }
 
-function deleteEntry(shoppingListID) {
-  fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList/" + shoppingListID, {
+function deleteEntry(billID) {
+  fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills/" + billID, {
 
     headers: {
       'Accept': 'application/json',
@@ -26,8 +26,8 @@ function deleteEntry(shoppingListID) {
 
 
 
-function App() {
-  const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList");
+function App2() {
+  const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills");
   if (isLoading === false) {
     console.log(Object.keys(data))
     console.log()
@@ -36,14 +36,21 @@ function App() {
       <div className="App">
         <table>
           <tr>
-            <th>Gegenstand</th>
+            <th>Gläubiger</th>
+            <th>Rechnung</th>
+            <th>Schuldner</th>
+            <th>Datum</th>
+            <th>Betrag</th>
             <th></th>
           </tr>
           {data.map(item => (
             <tr>
-              <td>{item.item}</td>
-
-              <td><button onClick={() => deleteEntry(item.shoppingListID)}>Löschen!</button></td>
+              <td>{item.contributor}</td>
+              <td>{item.billID}</td>
+              <td>{item.sharedWith}</td>
+              <td>{item.datum}</td>
+              <td>{item.amount}</td>
+              <td><button onClick={() => deleteEntry(item.billID)}>Löschen!</button></td>
             </tr>
           ))}
         </table>
@@ -53,4 +60,4 @@ function App() {
   }
 }
 
-export default App;
+export default Overview;

@@ -3,12 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useForm } from "react-hook-form";
 import useFetch from "react-fetch-hook";
 import { Link, Routes, Route, useNavigate } from 'react-router-dom'
-import App1 from './App1';
-import App2 from './App2';
 
 
 
-function App() {
+function Login() {
 
     let { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/login");
 
@@ -43,4 +41,4 @@ function App() {
     );
 }
 
-export default App;
+export default Login;

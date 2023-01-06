@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App1.css';
+import './Splitter.css';
 import MultiSelectDropdown from "./MultiSelectDropdown";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import { v4 as uuid } from 'uuid';
@@ -10,19 +10,8 @@ import useFetch from "react-fetch-hook";
 
 
 const contributor = "Luca"
-/*
-  < div class="row" >
-  {
-    mates.map(mate => <label>
-      <p>{mate.firstname}</p>
-      <p>{mate.lastname}</p>
-      <p>{mate.personID}</p>
-      <p>{mate.groupID}</p>
-    </label>)
-  }
-        </div >
-*/
-function App1() {
+
+function Splitter() {
   const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills");
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -144,4 +133,4 @@ function App1() {
 
 }
 
-export default App1;
+export default Splitter;
