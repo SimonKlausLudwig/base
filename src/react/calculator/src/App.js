@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { BrowserRouter, Routes, Route, Outlet, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet, NavLink, useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
+import Navbar from 'react-bootstrap/Navbar';
 
 
 /// shopping list imports
@@ -31,12 +32,12 @@ import { Link } from 'react-router-dom';
 
 
 const App = () => {
+
     return (
         <BrowserRouter>
             <Routes>
                 <Route element={<Layout />}>
-                    <Route index element={<Home />} />
-                    <Route path="home" element={<Home />} />
+                    <Route index element={<Login />} />
                     <Route path="shoppinglist" element={<ShoppingList />} />
                     <Route path="overview" element={<Overview />} />
                     <Route path="splitter" element={<Splitter />} />
@@ -51,21 +52,18 @@ const App = () => {
 const Layout = () => {
     const style = ({ isActive }) => ({
         fontWeight: isActive ? 'bold' : 'normal',
+        color: 'black',
+        margin: '0 1rem'
     });
+
 
     return (
         <>
-            <h1>React Router</h1>
+            <h1>Splitmate</h1>
 
-            <nav
-                style={{
-                    borderBottom: 'solid 1px',
-                    paddingBottom: '1rem',
-                }}
-            >
-                <NavLink to="/home" style={style}>
-                    Home
-                </NavLink>
+            <Navbar bg="light" variant="light" className="justify-content-center">
+
+
                 <NavLink to="/shoppinglist" style={style}>
                     ShoppingList
                 </NavLink>
@@ -75,11 +73,9 @@ const Layout = () => {
                 <NavLink to="/splitter" style={style}>
                     Splitter
                 </NavLink>
-                <NavLink to="/login" style={style}>
-                    Login
-                </NavLink>
 
-            </nav>
+
+            </Navbar>
 
             <main style={{ padding: '1rem 0' }}>
                 <Outlet />
@@ -88,13 +84,7 @@ const Layout = () => {
     );
 };
 
-const Home = () => {
-    return (
-        <>
-            <h2>Home</h2>
-        </>
-    );
-};
+
 
 
 /// shopping list start ///
@@ -106,7 +96,7 @@ const ShoppingList = () => {
         return (
             <>
                 <div className="App">
-                    <Table striped bordered hover>
+                    <Table striped bordered hover className="table mx-auto">
                         <thead>
                             <tr>
                                 <th class="col">Gegenstand</th>
@@ -161,7 +151,7 @@ const Overview = () => {
 
         return (
             <div className="App">
-                <Table striped bordered hover>
+                <Table striped bordered hover className="table mx-auto">
                     <thead>
                         <tr>
                             <th>Gläubiger</th>
@@ -328,9 +318,7 @@ const Splitter = () => {
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <p class="text-start">Placeholder</p>
-                </div>
+
 
 
             </form>
@@ -347,7 +335,7 @@ const Splitter = () => {
 /// login start ///
 
 const Login = () => {
-
+    const navigate = useNavigate();
     let { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/login");
 
     const onSubmit = formData => {
@@ -356,6 +344,8 @@ const Login = () => {
         data.forEach(element => {
             if ((formData.username === element.username) && (formData.password === element.password)) {
                 console.log("perfekt")
+                navigate("overview")
+
 
             }
         });
