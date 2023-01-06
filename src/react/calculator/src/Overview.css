@@ -26,11 +26,8 @@ table {
     width: 100%;
     max-width: 800px;
     border-collapse: collapse;
-    /* Füge eine Schattierung hinzu */
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-    /* Füge eine Rundung für die Ecken der Tabelle hinzu */
     border-radius: 5px;
-    /* Füge eine Scrollbar hinzu */
     overflow-y: scroll;
 
 }
