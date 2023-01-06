@@ -39,6 +39,7 @@ function App() {
             <th>Gläubiger</th>
             <th>Rechnung</th>
             <th>Schuldner</th>
+            <th>Datum</th>
             <th>Betrag</th>
             <th></th>
           </tr>
@@ -47,6 +48,7 @@ function App() {
               <td>{item.contributor}</td>
               <td>{item.billID}</td>
               <td>{item.sharedWith}</td>
+              <td>{item.datum}</td>
               <td>{item.amount}</td>
               <td><button onClick={() => deleteEntry(item.billID)}>Löschen!</button></td>
             </tr>

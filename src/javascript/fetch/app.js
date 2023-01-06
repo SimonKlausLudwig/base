@@ -20,7 +20,7 @@ let employees = [
 
 
 let mates = [{ "firstname": "Luca", "lastname": "Mohr", "personID": 1, "groupID": 1 }, { "firstname": "Niklas", "lastname": "Scholz", "personID": 2, "groupID": 1 }]
-let bills = [{ "billID": "1", "contributor": "Luca", "amount": "13.30", "sharedWith": "Niklas", "comment": "test" }, { "billID": "2", "contributor": "Niklas", "amount": "13.30", "sharedWith": "Luca", "comment": "Test 2" }]
+let bills = [{ "billID": "1", "contributor": "Luca", "amount": "13.30", "sharedWith": "Niklas", "comment": "test", "datum": "2022-01-06" }, { "billID": "2", "contributor": "Niklas", "amount": "13.30", "sharedWith": "Luca", "comment": "Test 2", "datum": "2022-01-06" }]
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
