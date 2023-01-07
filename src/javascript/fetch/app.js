@@ -70,7 +70,7 @@ app.delete("/api/bills/:billID", (req, res) => {
 
 // login api
 
-let login = [{ "username": "luca@gmx.de", "password": "luca" }, { "username": "niklas@gmx.de", "password": "luca" }]
+let login = [{ "eMail": "luca@gmx.de", "password": "luca", "firstname": "Luca", "lastname": "Mohr", "groupID": 1 }, { "eMail": "niklas@gmx.de", "password": "niklas", "firstname": "Niklas", "lastname": "Scholz", "groupID": 1 }, { "eMail": "simon@gmx.de", "password": "simon", "firstname": "Simon", "lastname": "Ludwig", "groupID": 2 }, { "eMail": "tobias@gmx.de", "password": "tobias", "firstname": "Tobias", "lastname": "Ludwig", "groupID": 2 }]
 app.post('/api/login', (req, res) => {
     res.json(login)
 });

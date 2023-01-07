@@ -185,7 +185,6 @@ const Overview = () => {
                     <thead>
                         <tr>
                             <th>Gläubiger</th>
-                            <th>Rechnung</th>
                             <th>Schuldner</th>
                             <th>Datum</th>
                             <th>Betrag</th>
@@ -196,7 +195,6 @@ const Overview = () => {
                         {data.map(item => (
                             <tr>
                                 <td>{item.contributor}</td>
-                                <td>{item.billID}</td>
                                 <td>{item.sharedWith}</td>
                                 <td>{item.date}</td>
                                 <td>{item.amount}</td>
@@ -242,7 +240,7 @@ function deleteBill(billID) {
 
 
 const Splitter = () => {
-    const contributor = sessionStorage.getItem('myUsername');
+    const contributor = sessionStorage.getItem('myFirstname');
     const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills");
     const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -310,19 +308,19 @@ const Splitter = () => {
                     </div>
                     <div class="col checkbox">
                         <div>
-                            <input {...register("sharedWith")} type="checkbox" id="option1" value="niklas" />
+                            <input {...register("sharedWith")} type="checkbox" id="option1" value="Niklas" />
                             <label for="option1">Niklas</label>
                         </div>
                         <div>
-                            <input {...register("sharedWith")} type="checkbox" id="option2" value="luca" />
+                            <input {...register("sharedWith")} type="checkbox" id="option2" value="Luca" />
                             <label for="option2">Luca</label>
                         </div>
                         <div>
-                            <input {...register("sharedWith")} type="checkbox" id="option3" value="tim" />
+                            <input {...register("sharedWith")} type="checkbox" id="option3" value="Tim" />
                             <label for="option3">Tim</label>
                         </div>
                         <div>
-                            <input {...register("sharedWith")} type="checkbox" id="option4" value="tom" />
+                            <input {...register("sharedWith")} type="checkbox" id="option4" value="Tom" />
                             <label for="option4">Tom</label>
                         </div>
 
@@ -373,10 +371,10 @@ const Login = () => {
 
         console.log(formData)
         data.forEach(element => {
-            if ((formData.username === element.username) && (formData.password === element.password)) {
+            if ((formData.username === element.eMail) && (formData.password === element.password)) {
                 console.log("perfekt")
-                sessionStorage.setItem('myUsername', formData.username);
-                console.log(sessionStorage.getItem('myUsername'))
+                sessionStorage.setItem('myFirstname', element.firstname);
+                console.log(sessionStorage.getItem('myFirstname'))
                 navigate("overview")
 
 
