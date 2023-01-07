@@ -135,12 +135,7 @@ const ShoppingList = () => {
     };
 }
 
-function divider(sharedWith) {
-    if (typeof (sharedWith == "String")) {
-        return 2
-    }
-    else return sharedWith.length + 1
-}
+
 
 function deleteEntry(shoppingListID) {
     fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList/" + shoppingListID, {
