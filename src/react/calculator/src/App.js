@@ -90,7 +90,9 @@ const Layout = () => {
 /// shopping list start ///
 const ShoppingList = () => {
     const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList");
+
     if (isLoading === false) {
+        let shoppingListData = data.filter(shoppingListData => shoppingListData.groupID == sessionStorage.getItem('myGroupID'))
         console.log(Object.keys(data))
         console.log("test")
         return (
@@ -106,7 +108,7 @@ const ShoppingList = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map(item => (
+                                {shoppingListData.map(item => (
                                     <tr>
                                         <td>{item.item}</td>
                                         <td>{item.amount}</td>
@@ -135,12 +137,7 @@ const ShoppingList = () => {
     };
 }
 
-function divider(sharedWith) {
-    if (typeof (sharedWith == "String")) {
-        return 2
-    }
-    else return sharedWith.length + 1
-}
+
 
 function deleteEntry(shoppingListID) {
     fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList/" + shoppingListID, {
@@ -155,7 +152,7 @@ function deleteEntry(shoppingListID) {
         .catch(function (res) { console.log(res) })
 }
 function addEntry(shoppingListItem, itemAmount) {
-    fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList?contributor=" + contributor + "&item=" + shoppingListItem + "&amount=" + itemAmount + "&shoppingListID=" + uuid(), {
+    fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList?" + "item=" + shoppingListItem + "&amount=" + itemAmount + "&shoppingListID=" + uuid() + "&groupID=" + sessionStorage.getItem('myGroupID'), {
 
         headers: {
             'Accept': 'application/json',
@@ -175,6 +172,8 @@ function addEntry(shoppingListItem, itemAmount) {
 const Overview = () => {
     const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills");
     if (isLoading === false) {
+        let overviewData = data.filter(overviewData => overviewData.groupID == sessionStorage.getItem('myGroupID'))
+        console.log(overviewData)
         console.log(Object.keys(data))
         console.log()
 
@@ -192,9 +191,9 @@ const Overview = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map(item => (
+                        {overviewData.map(item => (
                             <tr>
-                                <td>{item.contributor}</td>
+                                <td>{item.contributorFirstname + " " + item.contributorLastname}</td>
                                 <td>{item.sharedWith}</td>
                                 <td>{item.date}</td>
                                 <td>{item.amount}</td>
@@ -241,7 +240,7 @@ function deleteBill(billID) {
 
 const Splitter = () => {
     const contributor = sessionStorage.getItem('myFirstname');
-    const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills");
+    const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/login");
     const { register, handleSubmit, formState: { errors } } = useForm();
 
 
@@ -250,21 +249,29 @@ const Splitter = () => {
         return <div>Is loading!</div>
     }
 
-    const bills = data;
+    let loginData = data;
+    // filter loginData to specific groupID from user
+    loginData = loginData.filter(loginData => loginData.groupID == sessionStorage.getItem('myGroupID'))
 
+    //filter out yourself with your personID
+    loginData = loginData.filter(loginData => loginData.personID != sessionStorage.getItem('myPersonID'))
 
-    const onSubmit = data => {
+    const onSubmit = splitterData => {
         let date = new Date();
         date = date.toISOString()
         date = date.substring(0, 10)
 
 
-        let datasharedWith = data.sharedWith
+        let datasharedWith = splitterData.sharedWith
+
+        if (!Array.isArray(datasharedWith)) {
+            datasharedWith = [datasharedWith]
+        }
         let amountPeople = datasharedWith.length + 1
         datasharedWith.forEach(element => {
 
 
-            fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills?contributor=" + contributor + "&amount=" + parseInt((data.amount / amountPeople)) + "&sharedWith=" + element + "&comment=" + data.comment + "&billID=" + uuid() + "&date=" + date, {
+            fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills?contributorFirstname=" + sessionStorage.getItem('myFirstname') + "&contributorLastname=" + sessionStorage.getItem('myLastname') + "&amount=" + (splitterData.amount / amountPeople) + "&sharedWith=" + element + "&comment=" + splitterData.comment + "&billID=" + uuid() + "&date=" + date + "&groupID=" + sessionStorage.getItem('myGroupID'), {
 
                 headers: {
                     'Accept': 'application/json',
@@ -276,17 +283,6 @@ const Splitter = () => {
                 .catch(function (res) { console.log(res) })
         });
     }
-
-    const options = [
-        { value: 'Luca', label: 'Luca' },
-        { value: 'Niklas', label: 'Niklas' },
-        { value: 'Simon', label: 'Simon' }
-    ]
-
-
-
-
-
 
 
 
@@ -307,26 +303,12 @@ const Splitter = () => {
 
                     </div>
                     <div class="col checkbox">
-                        <div>
-                            <input {...register("sharedWith")} type="checkbox" id="option1" value="Niklas" />
-                            <label for="option1">Niklas</label>
-                        </div>
-                        <div>
-                            <input {...register("sharedWith")} type="checkbox" id="option2" value="Luca" />
-                            <label for="option2">Luca</label>
-                        </div>
-                        <div>
-                            <input {...register("sharedWith")} type="checkbox" id="option3" value="Tim" />
-                            <label for="option3">Tim</label>
-                        </div>
-                        <div>
-                            <input {...register("sharedWith")} type="checkbox" id="option4" value="Tom" />
-                            <label for="option4">Tom</label>
-                        </div>
-
-
-
-
+                        {loginData.map(item => (
+                            <div>
+                                <input {...register("sharedWith")} type="checkbox" value={item.firstname + " " + item.lastname} />
+                                <label for={item.firstname + " " + item.lastname}>{item.firstname + " " + item.lastname}</label>
+                            </div>
+                        ))}
                     </div>
 
                 </div>
@@ -374,6 +356,9 @@ const Login = () => {
             if ((formData.username === element.eMail) && (formData.password === element.password)) {
                 console.log("perfekt")
                 sessionStorage.setItem('myFirstname', element.firstname);
+                sessionStorage.setItem('myLastname', element.lastname);
+                sessionStorage.setItem('myGroupID', element.groupID);
+                sessionStorage.setItem('myPersonID', element.personID);
                 console.log(sessionStorage.getItem('myFirstname'))
                 navigate("overview")
 
