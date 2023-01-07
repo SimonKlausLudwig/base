@@ -79,7 +79,7 @@ app.get('/api/login', (req, res) => {
 });
 
 // shooping list api
-let shoppingList = [{ "contributor": "Luca", "item": "Käse", "shoppingListID": uuid4() }, { "contributor": "Niklas", "item": "Brot", "shoppingListID": uuid4() }]
+let shoppingList = [{ "contributor": "Luca", "item": "Käse", "shoppingListID": uuid4(), "amount": "2" }, { "contributor": "Niklas", "item": "Brot", "shoppingListID": uuid4(), "amount": "1" }]
 app.post('/api/shoppingList', (req, res) => {
     res.json(shoppingList)
 });
@@ -91,4 +91,8 @@ app.delete("/api/shoppingList/:shoppingListID", (req, res) => {
     shoppingList = shoppingList.filter(shoppingList => shoppingList.shoppingListID != req.params.shoppingListID)
     res.send(200);
 })
+app.put('/api/shoppingList', (req, res) => {
+    shoppingList.push({ contributor: req.query.contributor, item: req.query.item, shoppingListID: req.query.shoppingListID, amount: req.query.amount })
+    res.send(200)
+});
 module.exports = app;

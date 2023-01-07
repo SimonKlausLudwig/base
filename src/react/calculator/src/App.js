@@ -95,23 +95,40 @@ const ShoppingList = () => {
         console.log("test")
         return (
             <>
-                <div className="App">
-                    <Table striped bordered hover className="table mx-auto">
-                        <thead>
-                            <tr>
-                                <th class="col">Gegenstand</th>
-                                <th class="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.map(item => (
+                <div id="wrapper">
+                    <div id="shoppingListTable" className="App">
+                        <Table striped bordered hover className="table mx-auto">
+                            <thead>
                                 <tr>
-                                    <td>{item.item}</td>
-                                    <td><button class="w-100 btn btn-lg btn-primary" onClick={() => deleteEntry(item.shoppingListID)}>Löschen!</button></td>
+                                    <th class="col">Gegenstand</th>
+                                    <th class="col">Menge</th>
+                                    <th class="col"></th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </Table>
+                            </thead>
+                            <tbody>
+                                {data.map(item => (
+                                    <tr>
+                                        <td>{item.item}</td>
+                                        <td>{item.amount}</td>
+                                        <td><button class="w-100 btn btn-lg btn-primary" onClick={() => deleteEntry(item.shoppingListID)}>Löschen!</button></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </div>
+                    <div id="addShoppingListEntry">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Gegenstand</span>
+                            <input id="shoppingListItem" type="text" class="form-control"></input>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Menge</span>
+                            <input id="itemAmount" type="text" class="form-control"></input>
+                        </div>
+                        <div>
+                            <button class="w-100 btn btn-lg btn-primary" onClick={() => addEntry(document.getElementById("shoppingListItem").value, document.getElementById("itemAmount").value)}>Hinzufügen zur Einkaufsliste</button>
+                        </div>
+                    </div>
                 </div>
             </>
         );
@@ -137,6 +154,18 @@ function deleteEntry(shoppingListID) {
         .then(function (res) { window.location.reload() })
         .catch(function (res) { console.log(res) })
 }
+function addEntry(shoppingListItem, itemAmount) {
+    fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList?contributor=Test&item=" + shoppingListItem + "&amount=" + itemAmount + "&shoppingListID=" + uuid(), {
+
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "PUT"
+    })
+        .then(function (res) { window.location.reload() })
+        .catch(function (res) { console.log(res) })
+}
 
 /// shopping list end ///
 
@@ -150,8 +179,9 @@ const Overview = () => {
         console.log()
 
         return (
-            <div className="App">
-                <Table striped bordered hover className="table mx-auto">
+
+            <div className="App col">
+                <Table striped bordered hover>
                     <thead>
                         <tr>
                             <th>Gläubiger</th>
@@ -176,6 +206,8 @@ const Overview = () => {
                     </tbody>
                 </Table>
             </div>
+
+
 
         );
     }
@@ -251,9 +283,7 @@ const Splitter = () => {
         { value: 'niklas', label: 'Niklas' },
         { value: 'simon', label: 'Simon' }
     ]
-    const MyComponent = () => (
-        <Select options={options} isMulti />
-    )
+
 
 
 

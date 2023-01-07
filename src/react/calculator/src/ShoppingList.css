@@ -64,3 +64,13 @@ td:last-child {
     /* Füge etwas Abstand zwischen dem Button und den anderen Zellen hinzu */
     padding-left: 16px;
 }
+
+#shoppingListTable {
+    float: left;
+    margin: 30px;
+}
+
+#addShoppingListEntry {
+    float: left;
+    margin: 30px;
+}
