@@ -23,6 +23,7 @@ import { Link } from 'react-router-dom';
 /// login imports
 //import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useState } from 'react';
 ///import { useForm } from "react-hook-form";
 //import useFetch from "react-fetch-hook";
 ///import { Link, Routes, Route, useNavigate } from 'react-router-dom'
@@ -69,8 +70,9 @@ const Layout = () => {
             </div>
 
             <div>
+
                 <Navbar bg="white" variant="light" className="justify-content-center" hidden={false}>
-                    <NavLink to="/shoppinglist" style={style} text-decoration="none">
+                    <NavLink to="/shoppinglist" style={style} textDecoration="none">
                         ShoppingList
                     </NavLink>
                     <NavLink to="/overview" style={style}>
@@ -180,6 +182,8 @@ function addEntry(shoppingListItem, itemAmount) {
 
 const Overview = () => {
     const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills");
+
+
     if (isLoading === false) {
         let overviewData = data.filter(overviewData => overviewData.groupID == sessionStorage.getItem('myGroupID'))
 
@@ -232,8 +236,6 @@ function deleteBill(billID) {
 /// overview end ///
 
 /// splitter start ///
-
-
 
 const Splitter = () => {
     const contributor = sessionStorage.getItem('myFirstname');
@@ -341,6 +343,8 @@ const Login = () => {
     const navigate = useNavigate();
     let { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/login");
 
+
+
     const onSubmit = formData => {
 
         console.log(formData)
@@ -354,7 +358,9 @@ const Login = () => {
                 sessionStorage.setItem('myPersonID', element.personID);
 
                 // after successfull login navigate to overview page
+
                 navigate("overview")
+
             }
         });
     }
