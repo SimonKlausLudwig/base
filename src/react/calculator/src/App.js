@@ -155,7 +155,7 @@ function deleteEntry(shoppingListID) {
         .catch(function (res) { console.log(res) })
 }
 function addEntry(shoppingListItem, itemAmount) {
-    fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList?contributor=Test&item=" + shoppingListItem + "&amount=" + itemAmount + "&shoppingListID=" + uuid(), {
+    fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList?contributor=" + contributor + "&item=" + shoppingListItem + "&amount=" + itemAmount + "&shoppingListID=" + uuid(), {
 
         headers: {
             'Accept': 'application/json',
@@ -238,10 +238,11 @@ function deleteBill(billID) {
 /// overview end ///
 
 /// splitter start ///
-const contributor = "Luca"
+
 
 
 const Splitter = () => {
+    const contributor = sessionStorage.getItem('myUsername');
     const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills");
     const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -279,9 +280,9 @@ const Splitter = () => {
     }
 
     const options = [
-        { value: 'luca', label: 'Luca' },
-        { value: 'niklas', label: 'Niklas' },
-        { value: 'simon', label: 'Simon' }
+        { value: 'Luca', label: 'Luca' },
+        { value: 'Niklas', label: 'Niklas' },
+        { value: 'Simon', label: 'Simon' }
     ]
 
 
@@ -374,6 +375,8 @@ const Login = () => {
         data.forEach(element => {
             if ((formData.username === element.username) && (formData.password === element.password)) {
                 console.log("perfekt")
+                sessionStorage.setItem('myUsername', formData.username);
+                console.log(sessionStorage.getItem('myUsername'))
                 navigate("overview")
 
 
