@@ -1,9 +1,9 @@
 .Overview {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100% !important;
+    height: 100vh !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
 /*
@@ -22,26 +22,28 @@ td {
 }
 */
 table {
-    border: 2px solid grey;
-    width: 100%;
-    max-width: 800px;
-    border-collapse: collapse;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    overflow-y: scroll;
+    border: 0px solid grey !important;
+    width: 100% !important;
+    max-width: 800px !important;
+    border-collapse: collapse !important;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 30px !important;
+    overflow-y: scroll !important;
 
 }
 
 th {
-    border-bottom: 1px solid black;
-    background-color: grey;
+    border-bottom: 1px solid black !important;
+    background-color: grey !important;
     color: white;
-    font-weight: bold;
+    font-weight: bold !important;
+
 }
 
 td {
-    text-align: center;
-    padding: 8px;
+    text-align: center !important;
+    padding: 8px !important;
+
 }
 
 /* Füge einen Hover-Effekt hinzu */
@@ -57,7 +59,11 @@ tr:nth-child(even) {
 
 /* Style für die Button-Spalte */
 td:last-child {
-    text-align: left;
+    text-align: left !important;
     /* Füge etwas Abstand zwischen dem Button und den anderen Zellen hinzu */
-    padding-left: 16px;
+    padding-left: 16px !important;
+}
+
+#title {
+    text-align: center !important;
 }

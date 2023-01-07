@@ -77,7 +77,10 @@ app.post('/api/login', (req, res) => {
 app.get('/api/login', (req, res) => {
     res.json(login)
 });
-
+app.put('/api/login', (req, res) => {
+    login.push({ firstname: req.query.firstname, lastname: req.query.lastname, eMail: req.query.eMail, groupID: req.query.groupID, personID: req.query.personID })
+    res.send(200)
+});
 // shooping list api
 let shoppingList = [{ "item": "Käse", "shoppingListID": uuid4(), "amount": "2", "groupID": 1 }, { "item": "Brot", "shoppingListID": uuid4(), "amount": "1", "groupID": 1 }]
 app.post('/api/shoppingList', (req, res) => {
