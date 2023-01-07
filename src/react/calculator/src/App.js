@@ -71,7 +71,7 @@ const Layout = () => {
 
             <div>
 
-                <Navbar bg="white" variant="light" className="justify-content-center" hidden={false}>
+                <Navbar bg="white" variant="light" className="justify-content-center">
                     <NavLink to="/shoppinglist" style={style} textDecoration="none">
                         ShoppingList
                     </NavLink>
