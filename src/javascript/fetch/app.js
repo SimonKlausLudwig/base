@@ -20,7 +20,7 @@ let employees = [
 ]
 
 
-let mates = [{ "firstname": "Luca", "lastname": "Mohr", "personID": 1, "groupID": 1 }, { "firstname": "Niklas", "lastname": "Scholz", "personID": 2, "groupID": 1 }]
+let mates = [{ "firstname": "Luca", "lastname": "Mohr", "personID": uuid4(), "groupID": 1 }, { "firstname": "Niklas", "lastname": "Scholz", "personID": uuid4(), "groupID": 1 }]
 let bills = [{ "billID": "1", "contributorFirstname": "Luca", "contributorLastname": "Mohr", "amount": "13.30", "sharedWith": "Niklas Scholz", "comment": "test", "date": "2022-01-06", "groupID": 1 }, { "billID": "2", "contributorFirstname": "Niklas", "contributorLastname": "Scholz", "amount": "13.30", "sharedWith": "Luca Mohr", "comment": "Test 2", "date": "2022-01-06", "groupID": 1 }]
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -70,7 +70,7 @@ app.delete("/api/bills/:billID", (req, res) => {
 
 // login api
 
-let login = [{ "eMail": "luca@gmx.de", "password": "luca", "firstname": "Luca", "lastname": "Mohr", "groupID": 1, "personID": 1 }, { "eMail": "niklas@gmx.de", "password": "niklas", "firstname": "Niklas", "lastname": "Scholz", "groupID": 1, "personID": 2 }, { "eMail": "simon@gmx.de", "password": "simon", "firstname": "Simon", "lastname": "Ludwig", "groupID": 2, "personID": 3 }, { "eMail": "tobias@gmx.de", "password": "tobias", "firstname": "Tobias", "lastname": "Ludwig", "groupID": 2, "personID": 4 }]
+let login = [{ "eMail": "luca@gmx.de", "password": "luca", "firstname": "Luca", "lastname": "Mohr", "groupID": 1, "personID": uuid4() }, { "eMail": "niklas@gmx.de", "password": "niklas", "firstname": "Niklas", "lastname": "Scholz", "groupID": 1, "personID": uuid4() }, { "eMail": "simon@gmx.de", "password": "simon", "firstname": "Simon", "lastname": "Ludwig", "groupID": 2, "personID": uuid4() }, { "eMail": "tobias@gmx.de", "password": "tobias", "firstname": "Tobias", "lastname": "Ludwig", "groupID": 2, "personID": uuid4() }]
 app.post('/api/login', (req, res) => {
     res.json(login)
 });
