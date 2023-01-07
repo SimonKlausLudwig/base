@@ -1,8 +1,9 @@
-//import { v4 as uuid } from 'uuid';
+
 
 const express = require('express');
 const app = express();
 const path = require('path');
+const uuid4 = require('uuid4');
 
 
 app.use(function (req, res, next) {
@@ -69,11 +70,29 @@ app.delete("/api/bills/:billID", (req, res) => {
 
 // login api
 
-let login = [{ "username": "luca@gmx.de", "password": "luca" }, { "username": "niklas@gmx.de", "password": "luca" }]
+let login = [{ "eMail": "luca@gmx.de", "password": "luca", "firstname": "Luca", "lastname": "Mohr", "groupID": 1 }, { "eMail": "niklas@gmx.de", "password": "niklas", "firstname": "Niklas", "lastname": "Scholz", "groupID": 1 }, { "eMail": "simon@gmx.de", "password": "simon", "firstname": "Simon", "lastname": "Ludwig", "groupID": 2 }, { "eMail": "tobias@gmx.de", "password": "tobias", "firstname": "Tobias", "lastname": "Ludwig", "groupID": 2 }]
 app.post('/api/login', (req, res) => {
     res.json(login)
 });
 app.get('/api/login', (req, res) => {
     res.json(login)
+});
+
+// shooping list api
+let shoppingList = [{ "contributor": "Luca", "item": "Käse", "shoppingListID": uuid4(), "amount": "2" }, { "contributor": "Niklas", "item": "Brot", "shoppingListID": uuid4(), "amount": "1" }]
+app.post('/api/shoppingList', (req, res) => {
+    res.json(shoppingList)
+});
+app.get('/api/shoppingList', (req, res) => {
+    res.json(shoppingList)
+});
+app.delete("/api/shoppingList/:shoppingListID", (req, res) => {
+
+    shoppingList = shoppingList.filter(shoppingList => shoppingList.shoppingListID != req.params.shoppingListID)
+    res.send(200);
+})
+app.put('/api/shoppingList', (req, res) => {
+    shoppingList.push({ contributor: req.query.contributor, item: req.query.item, shoppingListID: req.query.shoppingListID, amount: req.query.amount })
+    res.send(200)
 });
 module.exports = app;
