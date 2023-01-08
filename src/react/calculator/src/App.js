@@ -471,6 +471,7 @@ const Register = () => {
 
         const onSubmit = registerData => {
             console.log("registerData:", registerData)
+            
             fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/login?" + "eMail=" + registerData.eMail + "&password=" + registerData.password + "&firstname=" + registerData.firstname + "&lastname=" + registerData.lastname + "&personID=" + uuid() + "&groupID=" + registerData.groupID, {
 
                 headers: {
