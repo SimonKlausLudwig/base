@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BrowserRouter, Routes, Route, Outlet, NavLink, useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Navbar from 'react-bootstrap/Navbar';
-
+import './App.css';
 
 
 /// shopping list imports
@@ -74,7 +74,7 @@ const Layout = () => {
     return (
         <>
             <div>
-                <h1 id="title">Splitmate</h1>
+                <h1 id="title"><strong>Splitmate</strong></h1>
             </div>
 
             <div>
@@ -107,52 +107,59 @@ const Layout = () => {
 /// shopping list start ///
 const ShoppingList = () => {
     const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList");
-
+    const { register, handleSubmit, formState } = useForm();
     if (isLoading === false) {
         let shoppingListData = data.filter(shoppingListData => shoppingListData.groupID == sessionStorage.getItem('myGroupID'))
         console.log(Object.keys(data))
         console.log("test")
+
+        const onSubmit = addItemData => {
+            addEntry(addItemData.shoppingListItem, addItemData.itemAmount)
+
+        }
         return (
             <>
-                <div id="wrapper">
-                    <div id="shoppingListTable" className="App">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div id="wrapper">
+                        <div id="shoppingListTable" className="App">
 
-                        <Table striped bordered hover className="table mx-auto">
-                            <thead>
-                                <tr>
-                                    <th class="col">Gegenstand</th>
-                                    <th class="col">Menge</th>
-                                    <th class="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {shoppingListData.map(item => (
+                            <Table striped bordered hover className="table mx-auto">
+                                <thead>
                                     <tr>
-                                        <td>{item.item}</td>
-                                        <td>{item.amount}</td>
-                                        <td><button class="w-100 btn btn-lg btn-primary" onClick={() => deleteEntry(item.shoppingListID)}>Löschen!</button></td>
+                                        <th class="col">Gegenstand</th>
+                                        <th class="col">Menge</th>
+                                        <th class="col"></th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </Table>
+                                </thead>
+                                <tbody>
+                                    {shoppingListData.map(item => (
+                                        <tr>
+                                            <td>{item.item}</td>
+                                            <td>{item.amount}</td>
+                                            <td><button class="w-100 btn btn-lg btn-primary" onClick={() => deleteEntry(item.shoppingListID)}>Löschen!</button></td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+
+                        </div>
+
+                        <div id="addShoppingListEntry">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Gegenstand</span>
+                                <input {...register("shoppingListItem", { required: true })} id="shoppingListItem" type="text" class="form-control"></input>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Menge</span>
+                                <input {...register("itemAmount", { required: true })} id="itemAmount" type="text" class="form-control"></input>
+                            </div>
+                            <div>
+                                <button class="w-100 btn btn-lg btn-primary" disabled={!formState.isValid} type="submit">Hinzufügen zur Einkaufsliste</button>
+                            </div>
+                        </div>
 
                     </div>
-
-                    <div id="addShoppingListEntry">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Gegenstand</span>
-                            <input id="shoppingListItem" type="text" class="form-control"></input>
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Menge</span>
-                            <input id="itemAmount" type="text" class="form-control"></input>
-                        </div>
-                        <div>
-                            <button class="w-100 btn btn-lg btn-primary" onClick={() => addEntry(document.getElementById("shoppingListItem").value, document.getElementById("itemAmount").value)}>Hinzufügen zur Einkaufsliste</button>
-                        </div>
-                    </div>
-
-                </div>
+                </form>
             </>
         );
     };
@@ -205,6 +212,7 @@ const Overview = () => {
                         <tr>
                             <th>Gläubiger</th>
                             <th>Schuldner</th>
+                            <th>Kommentar</th>
                             <th>Datum</th>
                             <th>Betrag</th>
                             <th></th>
@@ -215,6 +223,7 @@ const Overview = () => {
                             <tr>
                                 <td>{item.contributorFirstname + " " + item.contributorLastname}</td>
                                 <td>{item.sharedWith}</td>
+                                <td>{item.comment}</td>
                                 <td>{item.date}</td>
                                 <td>{item.amount}</td>
                                 <td><button class="w-100 btn btn-lg btn-primary" onClick={() => deleteBill(item.billID)}>Löschen!</button></td>
@@ -250,7 +259,7 @@ function deleteBill(billID) {
 const Splitter = () => {
     const contributor = sessionStorage.getItem('myFirstname');
     const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/login");
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState } = useForm();
 
 
     if (isLoading) {
@@ -303,7 +312,7 @@ const Splitter = () => {
                     <div class="col">
                         <div class="input-group mb-3">
                             <span class="input-group-text">Betrag €</span>
-                            <input {...register("amount")} type="text" class="form-control" aria-label="Amount (to the nearest dollar)"></input>
+                            <input {...register("amount", { required: true })} type="text" class="form-control" aria-label="Amount (to the nearest dollar)"></input>
                         </div>
                     </div>
                 </div>
@@ -312,7 +321,7 @@ const Splitter = () => {
                     <div class="col checkbox mb-3">
                         {loginData.map(item => (
                             <div>
-                                <input {...register("sharedWith")} type="checkbox" value={item.firstname + " " + item.lastname} />
+                                <input {...register("sharedWith", { required: true })} type="checkbox" value={item.firstname + " " + item.lastname} />
                                 <label for={item.firstname + " " + item.lastname}>{item.firstname + " " + item.lastname}</label>
                             </div>
                         ))}
@@ -331,7 +340,7 @@ const Splitter = () => {
                 <div class="row">
                     <div class="col">
                         <div>
-                            <button id="create" class="w-100 btn btn-lg btn-primary" type="submit">
+                            <button id="create" class="w-100 btn btn-lg btn-primary" type="submit" disabled={!formState.isValid}>
                                 splitten
                             </button>
                         </div>
@@ -436,7 +445,8 @@ const Login = () => {
 const Register = () => {
 
     const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/login");
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState } = useForm();
+    const navigate = useNavigate();
     if (isLoading === false) {
         console.log(data)
         let groupIDs = data.map(loginData => loginData.groupID);
@@ -454,11 +464,12 @@ const Register = () => {
             })
                 .then(function (res) { window.location.reload() })
                 .catch(function (res) { console.log(res) })
+            navigate("/overview")
         }
 
         return (
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form novalidate onSubmit={handleSubmit(onSubmit)}>
 
                 <div>
                     <h1>Register</h1>
@@ -466,28 +477,28 @@ const Register = () => {
 
                 <div className="form-group">
                     <label>Firstname</label>
-                    <input {...register("firstname")} className="form-control" id="firstname" />
+                    <input {...register("firstname", { required: true })} className="form-control" id="firstname" />
                 </div>
 
                 <div className="form-group">
                     <label >Lastname</label>
-                    <input {...register("lastname")} className="form-control" id="lastname" />
+                    <input {...register("lastname", { required: true })} className="form-control" id="lastname" />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="email">Email address</label>
-                    <input {...register("eMail")} type="email" className="form-control" id="email" aria-describedby="emailHelp" />
+                    <input {...register("eMail", { required: true })} type="email" className="form-control" id="email" aria-describedby="emailHelp" />
                     <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="password">Password</label>
-                    <input {...register("password")} type="password" className="form-control" id="password" />
+                    <input {...register("password", { required: true })} type="password" className="form-control" id="password" />
                 </div>
 
                 <div>
                     <label >Suche dir deine Gruppe aus</label>
-                    <Form.Select {...register("groupID")} aria-label="Default select example">
+                    <Form.Select {...register("groupID", { required: true })} aria-label="Default select example">
                         {groupIDs.map(groupID => (
 
 
@@ -498,7 +509,7 @@ const Register = () => {
                 </div>
 
                 <div id="register">
-                    <button type="submit" className="btn btn-primary">Register</button>
+                    <button type="submit" className="btn btn-primary" disabled={!formState.isValid}>Register</button>
                 </div>
 
             </form >
