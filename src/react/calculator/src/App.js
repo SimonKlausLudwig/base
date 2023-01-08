@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table';
 import Navbar from 'react-bootstrap/Navbar';
 
 
+
 /// shopping list imports
 import './ShoppingList.css';
 import useFetch from "react-fetch-hook";
@@ -24,6 +25,11 @@ import { Link } from 'react-router-dom';
 //import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { positions, Provider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+
+import { useAlert } from "react-alert";
 ///import { useForm } from "react-hook-form";
 //import useFetch from "react-fetch-hook";
 ///import { Link, Routes, Route, useNavigate } from 'react-router-dom'
@@ -61,8 +67,10 @@ const Layout = () => {
         textDecoration: "none"
 
     });
-
-
+    const location = useLocation();
+    // get the current route from the location object
+    const currentRoute = location.pathname;
+    console.log(currentRoute)
     return (
         <>
             <div>
@@ -70,18 +78,18 @@ const Layout = () => {
             </div>
 
             <div>
-
-                <Navbar bg="white" variant="light" className="justify-content-center" hidden={false}>
-                    <NavLink to="/shoppinglist" style={style} textDecoration="none">
-                        ShoppingList
-                    </NavLink>
-                    <NavLink to="/overview" style={style}>
-                        Overview
-                    </NavLink>
-                    <NavLink to="/splitter" style={style}>
-                        Splitter
-                    </NavLink>
-                </Navbar>
+                {(currentRoute !== '/' && currentRoute !== "/register") && (
+                    <Navbar bg="white" variant="light" className="justify-content-center" hidden={false}>
+                        <NavLink to="/shoppinglist" style={style} textDecoration="none">
+                            ShoppingList
+                        </NavLink>
+                        <NavLink to="/overview" style={style}>
+                            Overview
+                        </NavLink>
+                        <NavLink to="/splitter" style={style}>
+                            Splitter
+                        </NavLink>
+                    </Navbar>)}
             </div>
 
             <main style={{ padding: '1rem 0' }}>
@@ -341,43 +349,68 @@ const Splitter = () => {
 
 const Login = () => {
     const navigate = useNavigate();
-    let { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/login");
-
-
+    let { isLoading, data } = useFetch(
+        "https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/login"
+    );
+    //const alert = useAlert();
 
     const onSubmit = formData => {
+        if (!data) {
+            return;
+        }
 
-        console.log(formData)
+        console.log(formData);
+        let loginSuccess = false
         data.forEach(element => {
-            if ((formData.username === element.eMail) && (formData.password === element.password)) {
-
+            if (
+                formData.username === element.eMail &&
+                formData.password === element.password
+            ) {
                 // set user specific variables and store them in session storage of browser
-                sessionStorage.setItem('myFirstname', element.firstname);
-                sessionStorage.setItem('myLastname', element.lastname);
-                sessionStorage.setItem('myGroupID', element.groupID);
-                sessionStorage.setItem('myPersonID', element.personID);
+                sessionStorage.setItem("myFirstname", element.firstname);
+                sessionStorage.setItem("myLastname", element.lastname);
+                sessionStorage.setItem("myGroupID", element.groupID);
+                sessionStorage.setItem("myPersonID", element.personID);
 
                 // after successfull login navigate to overview page
-
-                navigate("overview")
-
+                navigate("overview");
+                loginSuccess = true
             }
+
         });
-    }
+        if (!loginSuccess) {
+            alert("invalid password or email!")
+        }
+
+        //alert.error('This is an error message!')
+        //alert.show("This is an alert message!", { offset: 0 });
+    };
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-
             <div className="form-group">
                 <label htmlFor="email">Email address</label>
-                <input {...register("username")} type="email" className="form-control" id="email" aria-describedby="emailHelp" />
-                <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                <input
+                    {...register("username")}
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    aria-describedby="emailHelp"
+                />
+                <small id="emailHelp" className="form-text text-muted">
+                    We'll never share your email with anyone else.
+                </small>
             </div>
 
             <div className="form-group">
                 <label htmlFor="password">Password</label>
-                <input {...register("password")} type="password" className="form-control" id="password" />
+                <input
+                    {...register("password")}
+                    type="password"
+                    className="form-control"
+                    id="password"
+                />
             </div>
 
             <div>
@@ -387,14 +420,11 @@ const Login = () => {
             </div>
 
             <div>
-                <NavLink to="/register">
-                    or register here
-                </NavLink>
+                <NavLink to="/register">or register here</NavLink>
             </div>
-
         </form>
     );
-}
+};
 
 /// login end ///
 
