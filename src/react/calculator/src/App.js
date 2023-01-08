@@ -108,6 +108,15 @@ const Layout = () => {
 const ShoppingList = () => {
     const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/shoppingList");
     const { register, handleSubmit, formState } = useForm();
+    const handleClick = (shoppingListID) => {
+        // only delete, if user confirms
+        if (window.confirm('Are you sure you want to press this button?')) {
+
+
+            deleteEntry(shoppingListID)
+        }
+    };
+
     if (isLoading === false) {
         let shoppingListData = data.filter(shoppingListData => shoppingListData.groupID == sessionStorage.getItem('myGroupID'))
         console.log(Object.keys(data))
@@ -136,7 +145,7 @@ const ShoppingList = () => {
                                         <tr>
                                             <td>{item.item}</td>
                                             <td>{item.amount}</td>
-                                            <td><button class="w-100 btn btn-lg btn-primary" onClick={() => deleteEntry(item.shoppingListID)}>Löschen!</button></td>
+                                            <td><button class="w-100 btn btn-lg btn-primary" onClick={() => handleClick(item.shoppingListID)}>Löschen!</button></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -200,6 +209,14 @@ function addEntry(shoppingListItem, itemAmount) {
 const Overview = () => {
     const { isLoading, data } = useFetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/bills");
 
+    const handleClick = (billID) => {
+        // only delete, if user confirms
+        if (window.confirm('Are you sure you want to press this button?')) {
+
+
+            deleteBill(billID)
+        }
+    };
 
     if (isLoading === false) {
         let overviewData = data.filter(overviewData => overviewData.groupID == sessionStorage.getItem('myGroupID'))
@@ -226,7 +243,7 @@ const Overview = () => {
                                 <td>{item.comment}</td>
                                 <td>{item.date}</td>
                                 <td>{item.amount}</td>
-                                <td><button class="w-100 btn btn-lg btn-primary" onClick={() => deleteBill(item.billID)}>Löschen!</button></td>
+                                <td><button class="w-100 btn btn-lg btn-primary" type="submit" onClick={() => handleClick(item.billID)}>Löschen!</button></td>
                             </tr>
                         ))}
                     </tbody>
