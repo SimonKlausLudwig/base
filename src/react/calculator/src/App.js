@@ -78,6 +78,7 @@ const Layout = () => {
             </div>
 
             <div>
+
                 {(currentRoute !== '/' && currentRoute !== "/register") && (
                     <Navbar bg="white" variant="light" className="justify-content-center" hidden={false}>
                         <NavLink to="/shoppinglist" style={style} textDecoration="none">
@@ -90,6 +91,7 @@ const Layout = () => {
                             Splitter
                         </NavLink>
                     </Navbar>)}
+
             </div>
 
             <main style={{ padding: '1rem 0' }}>
