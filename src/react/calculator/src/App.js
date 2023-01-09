@@ -467,22 +467,36 @@ const Register = () => {
     if (isLoading === false) {
         console.log(data)
         let groupIDs = data.map(loginData => loginData.groupID);
+        let eMails = data.map(loginData => loginData.eMail)
         groupIDs = [...new Set(groupIDs)];
-
+        eMails = [...new Set(eMails)];
         const onSubmit = registerData => {
-            console.log("registerData:", registerData)
-            
-            fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/login?" + "eMail=" + registerData.eMail + "&password=" + registerData.password + "&firstname=" + registerData.firstname + "&lastname=" + registerData.lastname + "&personID=" + uuid() + "&groupID=" + registerData.groupID, {
 
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: "PUT"
-            })
-                .then(function (res) { window.location.reload() })
-                .catch(function (res) { console.log(res) })
-            navigate("/overview")
+            if (eMails.includes(registerData.eMail)) {
+                alert("User already exists! Login or register with anoter eMail")
+            }
+            else {
+
+
+                console.log("registerData:", registerData)
+
+                fetch("https://8080-nklsdhbw-webprogramming-ltpyo05qis6.ws-eu81.gitpod.io/api/login?" + "eMail=" + registerData.eMail + "&password=" + registerData.password + "&firstname=" + registerData.firstname + "&lastname=" + registerData.lastname + "&personID=" + uuid() + "&groupID=" + registerData.groupID, {
+
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: "PUT"
+                })
+                    .then(function (res) { window.location.reload() })
+                    .catch(function (res) { console.log(res) })
+
+                sessionStorage.setItem("myFirstname", registerData.firstname);
+                sessionStorage.setItem("myLastname", registerData.lastname);
+                sessionStorage.setItem("myGroupID", registerData.groupID);
+                sessionStorage.setItem("myPersonID", registerData.personID);
+                navigate("/overview")
+            }
         }
 
         return (
